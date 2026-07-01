@@ -1,1 +1,46 @@
-
+{
+  "name": "My Shirox Repo",
+  "identifier": "com.yourname.shiroxrepo",
+  "sourceURL": "https://raw.githubusercontent.com/100000000000000000001/bacon/main/apps.json",
+  "subtitle": "Personal anime library manager for iOS",
+  "description": "Shirox is a free, open-source personal anime library manager for iOS 15+.",
+  "website": "https://github.com/xibrox/Shirox",
+  "featuredApps": [
+    "com.shirox.app"
+  ],
+  "apps": [
+    {
+      "name": "Shirox",
+      "bundleIdentifier": "com.shirox.app",
+      "developerName": "xibrox",
+      "subtitle": "Personal anime library manager for iOS",
+      "localizedDescription": "Shirox is a free, open-source personal anime library manager for iOS 15+.\n\n• Organize your anime collection with community-built modules\n• AniList integration for library management and discovery\n• Continue Watching — pick up right where you left off\n• Picture-in-Picture and AirPlay support\n• Subtitle support",
+      "iconURL": "https://raw.githubusercontent.com/xibrox/Shirox/main/Shirox/shirox-icon.icon/Assets/%E7%99%BD-shiro.png",
+      "tintColor": "ef4444",
+      "category": "entertainment",
+      "screenshots": [],
+      "versions": [
+        {
+          "version": "0.0.99",
+          "buildVersion": "97",
+          "date": "2026-07-01",
+          "localizedDescription": "Beta release",
+          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/beta/Shirox.ipa",
+          "size": 8526059,
+          "minOSVersion": "15.0"
+        }
+      ]
+    }
+  ],
+  "news": [
+    {
+      "title": "New in 0.0.94 — My Library holds everything",
+      "identifier": "news-0.0.94-my-library-everything",
+      "caption": "My Library now holds everything — not just anime matched to AniList or MyAnimeList. Titles you watch from streaming modules without a provider match, and your own imported local files, now appear in My Library too.",
+      "tintColor": "ef4444",
+      "date": "2026-06-22",
+      "notify": true,
+      "appID": "com.shirox.app"
+    }
+  ]
+}
