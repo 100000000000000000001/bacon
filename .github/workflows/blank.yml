@@ -1,0 +1,102 @@
+name: Update Shirox FastSign Repo
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate FastSign repo.json from Shirox apps.json
+        run: |
+          python3 <<'PY'
+          import json
+          import urllib.request
+
+          UPSTREAM_URL = "https://raw.githubusercontent.com/xibrox/Shirox/main/apps.json"
+
+          def fetch_json(url):
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              with urllib.request.urlopen(req) as response:
+                  return json.load(response)
+
+          def get_size(url, fallback):
+              try:
+                  req = urllib.request.Request(
+                      url,
+                      method="HEAD",
+                      headers={"User-Agent": "Mozilla/5.0"}
+                  )
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      length = response.headers.get("Content-Length")
+                      if length:
+                          return int(length)
+              except Exception:
+                  pass
+              return fallback
+
+          upstream = fetch_json(UPSTREAM_URL)
+
+          app = upstream["apps"][0]
+          latest = app["versions"][0]
+
+          download_url = latest["downloadURL"]
+          size = get_size(download_url, latest.get("size", 0))
+
+          repo = {
+              "name": "My Shirox Repo",
+              "identifier": "com.jayden.shiroxrepo",
+              "version": "1.0",
+              "description": upstream.get(
+                  "description",
+                  "Personal FastSign repo for Shirox."
+              ),
+              "apps": [
+                  {
+                      "name": app.get("name", "Shirox"),
+                      "bundleIdentifier": app.get("bundleIdentifier", "com.shirox.app"),
+                      "version": latest.get("version", "0.0.0"),
+                      "versionDate": latest.get("date", ""),
+                      "size": size,
+                      "downloadURL": download_url,
+                      "developer": app.get("developerName", "xibrox"),
+                      "localizedDescription": app.get(
+                          "localizedDescription",
+                          upstream.get("description", "")
+                      ),
+                      "iconURL": app.get(
+                          "iconURL",
+                          "https://raw.githubusercontent.com/xibrox/Shirox/main/Shirox/shirox-icon.icon/Assets/%E7%99%BD-shiro.png"
+                      )
+                  }
+              ]
+          }
+
+          with open("repo.json", "w", encoding="utf-8") as f:
+              json.dump(repo, f, ensure_ascii=False, indent=2)
+
+          print("Updated repo.json")
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add repo.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update Shirox repo from upstream"
+            git push
+          fi
