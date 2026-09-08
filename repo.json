@@ -7,9 +7,9 @@
     {
       "name": "Shirox",
       "bundleIdentifier": "com.shirox.app",
-      "version": "1.0.5",
-      "versionDate": "2026-08-30",
-      "size": 9460825,
+      "version": "1.0.6",
+      "versionDate": "2026-09-08",
+      "size": 9751712,
       "downloadURL": "https://github.com/xibrox/Shirox/releases/download/beta/Shirox.ipa",
       "developer": "xibrox",
       "localizedDescription": "Shirox is a free, source-available personal anime library manager for iOS 15+.\n\n• Organize your anime collection with community-built modules\n• AniList integration for library management and discovery\n• Continue Watching: pick up right where you left off\n• Picture-in-Picture and AirPlay support\n• Subtitle support",
